@@ -1,0 +1,30 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#contenitore_icone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1500px;
+    height: 500px;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid black;
+}
+
+.icona {
+    width: 150px;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.name {
+    margin-top: 15px;
+}
