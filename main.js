@@ -4,6 +4,8 @@
 // 2: definire un array di colori e associare ad ogni tipo di icona un colore.
 // Visualizzare le icone di colore diverso in base al tipo.
 
+// 3: Aggiungere una select per filtrare le icone in base al tipo.
+// Popolare le options della select dinamicamente e, ogni volta che cambia il valore selezionato, visualizzare le icone corrispondenti.
 
 
 $(document).ready(function(){
@@ -111,52 +113,98 @@ $(document).ready(function(){
 
     console.log(tipi_icone);
 
+    // Scorro tutti i tipi di icona.
+    tipi_icone.forEach((tipo) => {
 
+        $('#selezione_icone').append(`
 
+            <option value="${tipo}">${tipo}</option>
 
-    // Devo scorrere tutte gli oggetti dentro l'array.
-
-    oggetti_icone.forEach((icona) => {
-
-    // Devo destrutturare solo le parti delle icone che mi interessano.
-
-        const {nome, prefisso, famiglia, tipo} = icona;
-
-    // Recupero l'indice del tipo di icona dentro l'array corrispondente.
-
-        var tipo_indice = tipi_icone.indexOf(tipo);
-
-        console.log(tipo_indice);
-
-    // Recupero il colore corrispondente all'indice del tipo d'icona.
-
-        var colore_indice = colori[tipo_indice];
-
-        console.log(colore_indice);
-
-
-    // Devo stampare a schermo l'icona con il nome usando il template literal.
-
-    $('#contenitore_icone').append(`
-
-        <div class="icona">
-            <i class="${famiglia} ${prefisso}${nome} fa-2x" style="color:${colore_indice}"></i>
-            <p class="name">${nome}</p>
-        </div>
-
-        `)
-
+            `)
 
     });
 
+    // Intercetto il cambio di selezione del tipo di icona.
+    $('#selezione_icone').change(() => {
+
+    // Recupero il tipo di selezione cliccato dall'utente.
+
+    const tipo_selezionato = $('#selezione_icone').val();
+
+    console.log(tipo_selezionato);
+
+    // Devo visualizzare solo le icone corrispondenti.
+    // Svuoto il contenitore.
+
+    $('#contenitore_icone').empty();
+
+    // Verifico se l'utente ha selezionato un tipo di icona.
+    if (tipo_selezionato != '') {
+
+        // Recupero le icone corrispondenti alla selezione dell'utente.
+
+        const icone_corrispondenti = oggetti_icone.filter((icona) => {
+
+            return tipo_selezionato == icona.tipo;
+
+        });
+
+        // Stampo le icone corrispondenti del tipo scelto dall'utente.
+
+        icone_corrispondenti.forEach((icona) => {
+
+            stampa_icone(icona);
+
+        });
+
+    } else
+    {
+        // Devo scorrere tutte gli oggetti dentro l'array.
+
+        oggetti_icone.forEach((icona) => {
+
+            stampa_icone(icona);
+
+        });
+    }
+});
 
 
 
 
 
 
-    // 3: Aggiungere una select per filtrare le icone in base al tipo.
-    // Popolare le options della select dinamicamente e, ogni volta che cambia il valore selezionato, visualizzare le icone corrispondenti.
+function stampa_icone(icona_stampata) {
 
+
+
+        // Devo destrutturare solo le parti delle icone che mi interessano.
+
+            const {nome, prefisso, famiglia, tipo} = icona_stampata;
+
+        // Recupero l'indice del tipo di icona dentro l'array corrispondente.
+
+            var tipo_indice = tipi_icone.indexOf(tipo);
+
+            console.log(tipo_indice);
+
+        // Recupero il colore corrispondente all'indice del tipo d'icona.
+
+            var colore_indice = colori[tipo_indice];
+
+            console.log(colore_indice);
+
+
+        // Devo stampare a schermo l'icona con il nome usando il template literal.
+
+        $('#contenitore_icone').append(`
+
+            <div class="icona_appesa">
+                <i class="${famiglia} ${prefisso}${nome} fa-2x" style="color:${colore_indice}"></i>
+                <p class="name">${nome}</p>
+            </div>
+
+            `)
+}
 
 });
